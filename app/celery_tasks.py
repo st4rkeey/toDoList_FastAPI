@@ -19,6 +19,8 @@ celery_app = Celery("tasks", broker=f"redis://{REDIS_HOST}:{REDIS_PORT}")
 
 @celery_app.task
 def send_email_task_created(email_to: str, username: str):
+    """Функция отправки уведомления пользователю на электронную почту"""
+
     with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
         server.login(SMTP_USER, SMTP_PASS)
         server.sendmail(

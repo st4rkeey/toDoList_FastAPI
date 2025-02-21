@@ -18,6 +18,8 @@ from app.users.users_dao import UsersDAO
 
 
 def get_token(request: Request):
+    """Функция получает токен из cookies, если нет - ошибка"""
+
     token = request.cookies.get("access_token")
     if not token:
         raise TokenAbsentException
@@ -25,6 +27,8 @@ def get_token(request: Request):
 
 
 async def get_current_user(token: str = Depends(get_token)):
+    """Функция возвращает текущего пользователя, который вошел в свою учетную запись, если все условия соблюдены"""
+
     try:
         payload = jwt.decode(
             token,

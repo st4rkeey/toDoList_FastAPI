@@ -16,6 +16,8 @@ router = APIRouter(
 
 @router.post("/register")
 async def register_user(user_data: SUserRegister):
+    """Создание (Регистрация) нового юзера"""
+
     existing_user = await UsersDAO.find_one_or_none(email=user_data.email)
     if existing_user:
         raise UserAlreadyExistException
@@ -27,6 +29,8 @@ async def register_user(user_data: SUserRegister):
 
 @router.post("/login")
 async def login_user(user_data: SUserLogin, response: Response):
+    """EndPoint для входа пользователя по почте и паролю"""
+
     user = await authenticate_user(user_data.email, user_data.password)
     if not user:
         raise IncorrectEmailOrPasswordException
